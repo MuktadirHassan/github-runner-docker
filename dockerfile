@@ -19,7 +19,8 @@ RUN mkdir /home/docker
 RUN apt-get install -y --no-install-suggests --no-install-recommends \
 curl \
 ca-certificates \
-jq
+jq \
+unzip
 
 # cd into the user directory, download and unzip the github actions runner
 RUN cd /home/docker && mkdir actions-runner && cd actions-runner \
