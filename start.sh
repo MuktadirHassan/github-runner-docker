@@ -36,7 +36,7 @@ if [[ -n $GITHUB_ACCESS_TOKEN ]]; then
 fi
 
 
-cd /home/docker/actions-runner
+cd /home/actions-runner
 
 export RUNNER_ALLOW_RUNASROOT=1
 ./config.sh \
