@@ -9,7 +9,7 @@ ARG RUNNER_VERSION="2.316.1"
 RUN apt-get update -y && apt-get upgrade -y 
 
 # add a non-sudo user
-RUN useradd -m -s /bin/sh docker
+RUN useradd -m -s /bin/bash docker
 
 # install necessary packages
 RUN apt-get install -y --no-install-suggests --no-install-recommends \
@@ -27,6 +27,7 @@ RUN cd /home/docker && mkdir actions-runner && cd actions-runner \
 
 # change ownership to non-sudo user
 RUN chown -R docker:docker /home/docker/actions-runner
+
 # install some additional dependencies
 RUN /home/docker/actions-runner/bin/installdependencies.sh
 
@@ -40,6 +41,10 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     && rm awscliv2.zip \
     && rm -rf aws
 
+# add group modification script
+COPY docker-group.sh /usr/local/bin/docker-group.sh
+RUN chmod +x /usr/local/bin/docker-group.sh
+
 # copy over the start.sh script
 COPY start.sh /home/docker/start.sh
 
@@ -50,4 +55,4 @@ RUN chmod +x /home/docker/start.sh
 USER docker
 
 # set the entrypoint to the start.sh script
-ENTRYPOINT ["/home/docker/start.sh"]
+ENTRYPOINT ["/usr/local/bin/docker-group.sh", "/home/docker/start.sh"]
