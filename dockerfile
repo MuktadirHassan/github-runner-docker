@@ -9,7 +9,7 @@ ARG RUNNER_VERSION="2.316.1"
 RUN apt-get update -y && apt-get upgrade -y 
 
 # add a non-sudo user
-RUN useradd -m docker
+RUN useradd -m -s /bin/sh docker
 
 # install necessary packages
 RUN apt-get install -y --no-install-suggests --no-install-recommends \
@@ -26,7 +26,7 @@ RUN cd /home/docker && mkdir actions-runner && cd actions-runner \
     && tar xzf ./actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz
 
 # change ownership to non-sudo user
-RUN chown -R docker /home/docker/actions-runner
+RUN chown -R docker:docker /home/docker/actions-runner
 # install some additional dependencies
 RUN /home/docker/actions-runner/bin/installdependencies.sh
 
