@@ -43,6 +43,11 @@ RUN chmod +x start.sh
 
 # add whatever packages your repository needs (so they don't have to be redownloaded over and over again)
 
+# aws cli
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+RUN unzip awscliv2.zip
+RUN ./aws/install
+
 
 # set the entrypoint to the start.sh script
 ENTRYPOINT ["./start.sh"]
